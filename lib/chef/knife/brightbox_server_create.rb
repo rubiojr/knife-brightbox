@@ -32,13 +32,21 @@ class Chef
         Chef::Knife::Bootstrap.load_deps
       end
 
+      FLAVORS = {
+        'nano' => 'typ-4nssg',
+        'mini' => 'typ-iqisj',
+        'small' => 'typ-urtky',
+        'medium' => 'typ-qdiwq',
+        'large' => 'typ-mlbt7',
+      }
+
       banner "knife brightbox server create (options)"
 
       option :flavor,
         :short => "-f FLAVOR",
         :long => "--flavor FLAVOR",
-        :description => "The flavor of server; default is NANO (512 MB)",
-        :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f },
+        :description => "The flavor of server; default is NANO (512 MB, typ-4nssg)",
+        :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = (FLAVORS[f] || 'typ-4nssg') },
         :default => 'typ-4nssg'
 
       option :image,
@@ -134,8 +142,9 @@ class Chef
         server = connection.servers.create(
           :name => config[:server_name],
           :image_id => Chef::Config[:knife][:image],
-          :flavor_id => 'typ-4nssg'
+          :flavor_id => Chef::Config[:knife][:flavor] || config[:flavor]
         )
+        puts "\n"
 
         puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
         puts "#{ui.color("Name", :cyan)}: #{server.name}"
