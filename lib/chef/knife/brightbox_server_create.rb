@@ -164,6 +164,7 @@ class Chef
         destination_id = server.interfaces.last['id']
         cip.map destination_id
         server.wait_for { print "."; connection.cloud_ips.get(ip['id']).mapped? }
+        puts "\n"
 
         server = connection.servers.get(server.id)
         puts "#{ui.color("Public IP Address", :cyan)}: #{server.public_ip_address['public_ip'] rescue ''}"
