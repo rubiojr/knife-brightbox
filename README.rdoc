@@ -1,0 +1,89 @@
+= Knife Brightbox
+
+= DESCRIPTION:
+
+This is the unofficial Opscode Knife plugin for Brightbox Cloud. This plugin gives knife the ability to create, bootstrap, and manage servers on the Brightbox Cloud.
+
+= INSTALLATION:
+
+Be sure you are running the latest version Chef. Versions earlier than 0.10.0 don't support plugins:
+
+    gem install chef
+
+This plugin is distributed as a Ruby Gem. To install it, run:
+
+    gem install knife-brightbox
+
+Depending on your system's configuration, you may need to run this command with root privileges.
+
+= CONFIGURATION:
+
+In order to communicate with the Brightbox Cloud API you will have to tell Knife about your Username and API Key.  The easiest way to accomplish this is to create some entries in your <tt>knife.rb</tt> file:
+
+    knife[:brightbox_client_id] = "Your Brightbox API client id"
+    knife[:brightbox_secret]  = "Your Brightbox API Key"
+
+If your knife.rb file will be checked into a SCM system (ie readable by others) you may want to read the values from environment variables:
+
+    knife[:brightbox_client_id] = "#{ENV['BRIGHTBOX_CLIENTID']}"
+    knife[:brightbox_secret] = "#{ENV['BRIGHTBOX_SECRET_KEY']}"
+
+You also have the option of passing your Brightbox API Username/Key into the individual knife subcommands using the <tt>-A</tt> (or <tt>--brightbox-api-username</tt>) <tt>-K</tt> (or <tt>--brightbox-api-key</tt>) command options
+
+    # provision a new Ubuntu 10.04 nano server using image img-3ikco, creates and maps a cloud ip
+    knife brightbox server create --image img-3ikco --server-name foobar -x ubuntu -A 'Your Brightbox Client ID' -K "Your Brightbox Secret"
+
+This plugin also has support for authenticating against an alternate API Auth URL.  This is useful if you are a Brightbox Cloud UK user or OpenStack early adopter.  Here is an example of configuring knife for Brightbox Cloud UK:
+
+    knife[:brightbox_api_auth_url] = "https://api.gb1.brightbox.com"
+
+Additionally the following options may be set in your `knife.rb`:
+
+* flavor
+* image
+* distro
+* template_file
+
+= SUBCOMMANDS:
+
+This plugin provides the following Knife subcommands.  Specific command options can be found by invoking the subcommand with a <tt>--help</tt> flag
+
+== knife brightbox server create
+
+Provisions a new server in the Brightbox Cloud and then perform a Chef bootstrap (using the SSH protocol).  The goal of the bootstrap is to get Chef installed on the target system so it can run Chef Client with a Chef Server. The main assumption is a baseline OS installation exists (provided by the provisioning). It is primarily intended for Chef Client systems that talk to a Chef server.  By default the server is bootstrapped using the {ubuntu10.04-gems}[https://github.com/opscode/chef/blob/master/chef/lib/chef/knife/bootstrap/ubuntu10.04-gems.erb] template.  This can be overridden using the <tt>-d</tt> or <tt>--template-file</tt> command options.
+
+== knife brightbox server delete
+
+Deletes an existing server in the currently configured Brightbox Cloud account by the server/instance id. You can find the instance id by entering 'knife brightbox server list'. Please note - this does not delete the associated node and client objects from the Chef server.
+
+== knife brightbox server list
+
+Outputs a list of all servers in the currently configured Brightbox Cloud account.  Please note - this shows all instances associated with the account, some of which may not be currently managed by the Chef server.
+
+== knife brightbox flavor list
+
+Outputs a list of all available flavors (available hardware configuration for a server) available to the currently configured Brightbox Cloud account.  Each flavor has a unique combination of disk space, memory capacity and priority for CPU time.  This data can be useful when choosing a flavor id to pass to the <tt>knife brightbox server create</tt> subcommand.
+
+== knife brightbox image list
+
+Outputs a list of all available images available to the currently configured Brightbox Cloud account.  An image is a collection of files used to create or rebuild a server. Brightbox provides a number of pre-built OS images by default.  This data can be useful when choosing an image id to pass to the <tt>knife brightbox server create</tt> subcommand.
+
+
+= LICENSE:
+
+Author:: Adam Jacob (<adam@opscode.com>)
+Author:: Seth Chisamore (<schisamo@opscode.com>)
+Copyright:: Copyright (c) 2009-2011 Opscode, Inc.
+License:: Apache License, Version 2.0
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
