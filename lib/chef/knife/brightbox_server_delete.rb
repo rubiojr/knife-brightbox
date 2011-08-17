@@ -28,16 +28,15 @@ class Chef
 
       def run
         @name_args.each do |instance_id|
-          
           server = connection.servers.get(instance_id)
-
+          if server.nil?
+            ui.error("Server instance #{instance_id} not found. Aborting.")
+            exit 1
+          end
           msg("Instance ID", server.id.to_s)
-          msg("Host ID", server.host_id)
           msg("Name", server.name)
           msg("Flavor", server.flavor.name)
           msg("Image", server.image.name)
-          msg("Public DNS Name", server.addresses["public"][0])
-          msg("Private IP Address", server.addresses["private"][0])
 
           puts "\n"
           confirm("Do you really want to delete this server")
