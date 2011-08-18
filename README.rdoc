@@ -1,5 +1,7 @@
 = Knife Brightbox
 
+This code is heavily based on the knife-rackspace plugin from Adam Jacob (<adam@opscode.com>) and Daniel DeLeo (<dan@opscode.com>). Fog already has a Brightbox provider, so porting the plugin was dead simple.
+
 = DESCRIPTION:
 
 This is the unofficial Opscode Knife plugin for Brightbox Cloud. This plugin gives knife the ability to create, bootstrap, and manage servers on the Brightbox Cloud.
