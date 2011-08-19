@@ -144,7 +144,7 @@ class Chef
           :image_id => Chef::Config[:knife][:image],
           :flavor_id => Chef::Config[:knife][:flavor] || config[:flavor]
         )
-        puts "\n"
+        puts " done \n"
 
         puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
         puts "#{ui.color("Name", :cyan)}: #{server.name}"
@@ -164,15 +164,15 @@ class Chef
         destination_id = server.interfaces.last['id']
         cip.map destination_id
         server.wait_for { print "."; connection.cloud_ips.get(ip['id']).mapped? }
-        puts "\n"
+        puts " done\n"
 
         server = connection.servers.get(server.id)
         puts "#{ui.color("Public IP Address", :cyan)}: #{server.public_ip_address['public_ip'] rescue ''}"
         puts "#{ui.color("Private IP Address", :cyan)}: #{server.private_ip_address['ipv4_address']}"
 
-        print "\n#{ui.color("Bootstraping server", :magenta)}"
-        print "\n#{ui.color("Waiting for sshd", :magenta)}"
-        print(".") until tcp_test_ssh(server.public_ip_address["public_ip"]) { sleep @initial_sleep_delay ||= 10; puts("done") }
+        print "\n#{ui.color("Bootstraping server ", :magenta)}"
+        print "\n#{ui.color("Waiting for sshd ", :magenta)}"
+        print(".") until tcp_test_ssh(server.public_ip_address["public_ip"]) { sleep @initial_sleep_delay ||= 10; puts(" done") }
         bootstrap_for_node(server).run
 
         puts "\n"
