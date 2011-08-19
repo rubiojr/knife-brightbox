@@ -104,6 +104,13 @@ class Chef
         :short => "-i IDENTITY_FILE",
         :long => "--identity-file IDENTITY_FILE",
         :description => "The SSH identity file used for authentication"
+      
+      option :no_host_key_verify,
+        :long => "--no-host-key-verify",
+        :description => "Disable host key verification",
+        :boolean => true,
+        :default => false
+
 
 
       def tcp_test_ssh(hostname)
@@ -199,6 +206,7 @@ class Chef
         bootstrap.config[:use_sudo] = true unless config[:ssh_user] == 'root'
         bootstrap.config[:template_file] = locate_config_value(:template_file)
         bootstrap.config[:environment] = config[:environment]
+        bootstrap.config[:no_host_key_verify] = config[:no_host_key_verify]
         bootstrap
       end
 
