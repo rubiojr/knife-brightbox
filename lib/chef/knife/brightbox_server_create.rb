@@ -104,7 +104,7 @@ class Chef
         :short => "-i IDENTITY_FILE",
         :long => "--identity-file IDENTITY_FILE",
         :description => "The SSH identity file used for authentication"
-      
+
       option :no_host_key_verify,
         :long => "--no-host-key-verify",
         :description => "Disable host key verification",
@@ -123,14 +123,9 @@ class Chef
         else
           false
         end
-      rescue Errno::ETIMEDOUT
+      rescue Errno::ETIMEDOUT, Errno::EPERM
         false
-      rescue Errno::EPERM
-        false
-      rescue Errno::ECONNREFUSED
-        sleep 2
-        false
-      rescue Errno::EHOSTUNREACH
+      rescue Errno::ECONNREFUSED, Errno::ENETUNREACH, Errno::EHOSTUNREACH
         sleep 2
         false
       ensure
@@ -162,7 +157,7 @@ class Chef
 
         # wait for it to be ready to do stuff
         server.wait_for { print "."; connection.servers.get(server.id).ready? }
-        
+
         puts("\n")
 
         print "#{ui.color("Creating cloud ip ", :magenta)}"
