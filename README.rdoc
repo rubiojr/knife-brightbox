@@ -10,6 +10,8 @@ You'll need a Brightbox Cloud account to use this plugin:
 
 https://manage.brightbox.com/user/new
 
+There is a tutorial showing you how to use the plugin here: http://blog.frameos.org/2011/08/17/bootstrapping-ubuntu-based-image-in-brightboxs-cloud-using-knife/
+
 = INSTALLATION:
 
 Be sure you are running the latest version Chef. Versions earlier than 0.10.0 don't support plugins:
