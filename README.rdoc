@@ -6,9 +6,11 @@ This code is heavily based on the knife-rackspace plugin from Adam Jacob (<adam@
 
 This is the unofficial Opscode Knife plugin for Brightbox Cloud. This plugin gives knife the ability to create, bootstrap, and manage servers on the Brightbox Cloud.
 
-You'll need a Brightbox Cloud (Beta) account to use this plugin:
+You'll need a Brightbox Cloud account to use this plugin:
 
-http://beta.brightbox.com/beta
+https://manage.brightbox.com/user/new
+
+There is a tutorial showing you how to use the plugin here: http://blog.frameos.org/2011/08/17/bootstrapping-ubuntu-based-image-in-brightboxs-cloud-using-knife/
 
 = INSTALLATION:
 
