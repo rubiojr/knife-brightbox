@@ -142,7 +142,7 @@ class Chef
 
         puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
         puts "#{ui.color("Name", :cyan)}: #{server.name}"
-        puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
+        puts "#{ui.color("Flavor", :cyan)}: #{server.flavor_id}"
         puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
 
         print "\n#{ui.color("Waiting server", :magenta)}"
@@ -161,21 +161,21 @@ class Chef
         puts " done\n"
 
         server = connection.servers.get(server.id)
-        puts "#{ui.color("Public IP Address", :cyan)}: #{server.public_ip_address['public_ip'] rescue ''}"
-        puts "#{ui.color("Private IP Address", :cyan)}: #{server.private_ip_address['ipv4_address']}"
+        puts "#{ui.color("Public IP Address", :cyan)}: #{server.public_ip_address}"
+        puts "#{ui.color("Private IP Address", :cyan)}: #{server.private_ip_address}"
 
         print "\n#{ui.color("Bootstraping server ", :magenta)}"
         print "\n#{ui.color("Waiting for sshd ", :magenta)}"
-        print(".") until tcp_test_ssh(server.public_ip_address["public_ip"]) { sleep @initial_sleep_delay ||= 10; puts(" done") }
+        print(".") until tcp_test_ssh(server.public_ip_address) { sleep @initial_sleep_delay ||= 10; puts(" done") }
         bootstrap_for_node(server).run
 
         puts "\n"
         puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
         puts "#{ui.color("Name", :cyan)}: #{server.name}"
-        puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
+        puts "#{ui.color("Flavor", :cyan)}: #{server.flavor_id}"
         puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
-        puts "#{ui.color("Public IP Address", :cyan)}: #{server.public_ip_address['public_ip'] rescue ''}"
-        puts "#{ui.color("Private IP Address", :cyan)}: #{server.private_ip_address['ipv4_address']}"
+        puts "#{ui.color("Public IP Address", :cyan)}: #{server.public_ip_address}"
+        puts "#{ui.color("Private IP Address", :cyan)}: #{server.private_ip_address}"
         puts "#{ui.color("Environment", :cyan)}: #{config[:environment] || '_default'}"
         puts "#{ui.color("Run List", :cyan)}: #{config[:run_list].join(', ')}"
       end
