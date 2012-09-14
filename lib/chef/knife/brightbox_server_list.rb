@@ -28,10 +28,10 @@ class Chef
 
       def run
         $stdout.sync = true
-
         server_list = [
           ui.color('Instance ID', :bold),
           ui.color('Private IP', :bold),
+          ui.color('Cloud IP', :bold),
           ui.color('Flavor', :bold),
           ui.color('Image', :bold),
           ui.color('Name', :bold),
@@ -39,8 +39,9 @@ class Chef
         ]
         connection.servers.all.each do |server|
           server_list << server.id.to_s
-          server_list << server.private_ip_address["ipv4_address"]
-          server_list << (server.flavor_id == nil ? "" : server.flavor_id.to_s)
+          server_list << server.interfaces.map{|i| i["ipv4_address"]}.join(", ")
+          server_list << server.cloud_ips.map{|i| i["public_ip"]}.join(", ")
+          server_list << server.server_type["handle"].to_s
           server_list << (server.image_id == nil ? "" : server.image_id.to_s)
           server_list << server.name
           server_list << begin
@@ -54,8 +55,8 @@ class Chef
             end
           end
         end
-        puts ui.list(server_list, :columns_across, 6)
 
+        puts ui.list(server_list, :columns_across, 7)
       end
     end
   end
