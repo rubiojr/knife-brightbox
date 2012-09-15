@@ -27,23 +27,25 @@ class Chef
       banner "knife brightbox flavor list (options)"
 
       def run
-        flavor_list = [ 
+        flavor_list = [
           ui.color('ID', :bold),
           ui.color('Name', :bold),
+          ui.color('Handle', :bold),
           ui.color('Architecture', :bold),
           ui.color('RAM', :bold),
           ui.color('Disk', :bold),
           ui.color('Cores', :bold)
         ]
-        connection.flavors.sort_by(&:id).each do |flavor|
+        connection.flavors.sort_by(&:ram).each do |flavor|
           flavor_list << flavor.id.to_s
           flavor_list << flavor.name
+          flavor_list << flavor.handle
           flavor_list << "#{flavor.bits.to_s}-bit"
-          flavor_list << "#{flavor.ram.to_s}"
-          flavor_list << "#{flavor.disk.to_s} GB"
+          flavor_list << "#{flavor.ram.to_s} MB"
+          flavor_list << "#{flavor.disk / 1024} GB"
           flavor_list << flavor.cores.to_s
         end
-        puts ui.list(flavor_list, :columns_across, 6)
+        puts ui.list(flavor_list, :columns_across, 7)
       end
     end
   end

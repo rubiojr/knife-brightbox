@@ -29,15 +29,17 @@ class Chef
       def run
         image_list = [
           ui.color('ID', :bold),
-          ui.color('Name', :bold)
+          ui.color('Name', :bold),
+          ui.color('Status', :bold)
         ]
 
         connection.images.sort_by(&:name).each do |image|
           image_list << image.id.to_s
           image_list << image.name
+          image_list << (image.public ? "public" : "private")
         end
 
-        puts ui.list(image_list, :columns_across, 2)
+        puts ui.list(image_list, :columns_across, 3)
       end
     end
   end
