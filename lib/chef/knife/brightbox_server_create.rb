@@ -164,7 +164,7 @@ class Chef
         puts "#{ui.color("Public IP Address", :cyan)}: #{server.public_ip_address}"
         puts "#{ui.color("Private IP Address", :cyan)}: #{server.private_ip_address}"
 
-        print "\n#{ui.color("Bootstraping server ", :magenta)}"
+        print "\n#{ui.color("Bootstrapping server ", :magenta)}"
         print "\n#{ui.color("Waiting for sshd ", :magenta)}"
         print(".") until tcp_test_ssh(server.public_ip_address) { sleep @initial_sleep_delay ||= 10; puts(" done") }
         bootstrap_for_node(server).run
