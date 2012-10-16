@@ -47,6 +47,13 @@ class Chef
         :description => "The image of the server",
         :proc => Proc.new { |i| Chef::Config[:knife][:image] = i }
 
+      option :server_groups,
+        :short => "-g grp-xxxxx,gpr-yyyyy,gpr-zzzzz",
+        :long => "--server-groups grp-xxxxx,gpr-yyyyy,gpr-zzzzz",
+        :description => "Server groups to place server in - comma delimited list",
+        :proc => Proc.new { |server_groups| server_groups.split(',') },
+        :default => []
+
       option :server_name,
         :short => "-S NAME",
         :long => "--server-name NAME",
@@ -163,6 +170,11 @@ class Chef
         server = connection.servers.get(server.id)
         puts "#{ui.color("Public IP Address", :cyan)}: #{server.public_ip_address}"
         puts "#{ui.color("Private IP Address", :cyan)}: #{server.private_ip_address}"
+
+        config[:server_groups].each do |server_group|
+          connection.add_servers_server_group(server_group,
+                                              :servers => [{ :server => server.id }])
+        end
 
         print "\n#{ui.color("Bootstrapping server ", :magenta)}"
         print "\n#{ui.color("Waiting for sshd ", :magenta)}"
