@@ -1,3 +1,8 @@
+# 0.2.1
+
+* Sets Fog dependency back to 1.5.0 to defer an issue introduced in 1.6
+	https://github.com/rubiojr/knife-brightbox/issues/6
+
 # 0.2
 
 * Added the ability to add server groups during bootstrap (@gkarekinian)

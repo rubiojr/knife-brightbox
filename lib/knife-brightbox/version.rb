@@ -1,6 +1,6 @@
 module Knife
-  module Brightbox 
-    VERSION = "0.2.0"
+  module Brightbox
+    VERSION = "0.2.1"
     MAJOR, MINOR, TINY = VERSION.split('.')
   end
 end
