@@ -48,9 +48,9 @@ class Chef
         :proc => Proc.new { |i| Chef::Config[:knife][:image] = i }
 
       option :server_groups,
-        :short => "-g grp-xxxxx,gpr-yyyyy,gpr-zzzzz",
-        :long => "--server-groups grp-xxxxx,gpr-yyyyy,gpr-zzzzz",
-        :description => "Server groups to place server in - comma delimited list",
+        :short => "-g grp-xxxxx,gpr-yyyyy",
+        :long => "--server-groups grp-xxxxx,gpr-yyyyy",
+        :description => "Server groups to place server in (comma delimited)",
         :proc => Proc.new { |server_groups| server_groups.split(',') },
         :default => []
 
