@@ -1,0 +1,8 @@
+# 0.2
+
+* Added the ability to add server groups during bootstrap (@gkarekinian)
+  
+  http://git.io/TOcHhQ
+
+* Fixes from @gkarekinian, @kangguru
+* Newer version of Fog required (1.5.0)
