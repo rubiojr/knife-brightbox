@@ -62,7 +62,7 @@ Provisions a new server in the Brightbox Cloud and then perform a Chef bootstrap
 
 == knife brightbox server delete
 
-Deletes an existing server in the currently configured Brightbox Cloud account by the server/instance id. You can find the instance id by entering 'knife brightbox server list'. Please note - this does not delete the associated node and client objects from the Chef server.
+Deletes an existing server in the currently configured Brightbox Cloud account by the server/instance id. You can find the instance id by entering 'knife brightbox server list'. You can specify the `--purge` flag to delete the associated node and client objects from the Chef server along with the cloup ip.
 
 == knife brightbox server list
 
