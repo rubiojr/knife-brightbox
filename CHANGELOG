@@ -1,7 +1,9 @@
-# 0.2.3
+# 0.3.0
 
 * introducing `--purge` and `--node-name` command line options for the
   delete subcommand to clean up resources after destroying a server
+* Relaxes fog dependency to allow 1.x versions of fog
+* Updates gemspec licence and description
 
 # 0.2.2
 
