@@ -1,3 +1,10 @@
+# 0.4.0
+
+* Introduces support for Zones.
+* Can list zones using `knife brightbox zone list`
+* Can specify zone to create server in with `--zone` argument using handle
+  (gb1-a)
+
 # 0.3.0
 
 * introducing `--purge` and `--node-name` command line options for the
