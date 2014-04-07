@@ -24,6 +24,11 @@ This plugin is distributed as a Ruby Gem. To install it, run:
 
 Depending on your system's configuration, you may need to run this command with root privileges.
 
+If you're using Bundler, add this to your Gemfile and run `bundle install`:
+
+   gem 'knife-brightbox'
+
+
 = CONFIGURATION:
 
 In order to communicate with the Brightbox Cloud API you will have to tell Knife about your Username and API Key.  The easiest way to accomplish this is to create some entries in your <tt>knife.rb</tt> file:
@@ -51,6 +56,7 @@ Additionally the following options may be set in your `knife.rb`:
 * image
 * distro
 * template_file
+* zone (gb1-a or gb1-b)
 
 = SUBCOMMANDS:
 
@@ -59,6 +65,8 @@ This plugin provides the following Knife subcommands.  Specific command options 
 == knife brightbox server create
 
 Provisions a new server in the Brightbox Cloud and then perform a Chef bootstrap (using the SSH protocol).  The goal of the bootstrap is to get Chef installed on the target system so it can run Chef Client with a Chef Server. The main assumption is a baseline OS installation exists (provided by the provisioning). It is primarily intended for Chef Client systems that talk to a Chef server.  By default the server is bootstrapped using the {ubuntu10.04-gems}[https://github.com/opscode/chef/blob/master/chef/lib/chef/knife/bootstrap/ubuntu10.04-gems.erb] template.  This can be overridden using the <tt>-d</tt> or <tt>--template-file</tt> command options.
+
+You can specify the Brightbox zone your new server will use using the `--zone` switch. By default it is `gb1-a`. It can also be `gb1-b` at the time of this writing. See `knife brightbox zone list` to request a current list from the API.
 
 == knife brightbox server delete
 
@@ -76,6 +84,9 @@ Outputs a list of all available flavors (available hardware configuration for a 
 
 Outputs a list of all available images available to the currently configured Brightbox Cloud account.  An image is a collection of files used to create or rebuild a server. Brightbox provides a number of pre-built OS images by default.  This data can be useful when choosing an image id to pass to the <tt>knife brightbox server create</tt> subcommand.
 
+== knife brightbox zone list
+
+Outputs a list of all available zones available to the currently configured Brightbox Cloud account.  A zone represents cloud resources at a datacentre.  Each zone is completely isolated in terms of power, cooling, security and networking equipment.  This data can be useful when choosing an zone handle to pass to the <tt>knife brightbox server create</tt> subcommand.
 
 = LICENSE:
 
