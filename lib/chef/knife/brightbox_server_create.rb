@@ -110,7 +110,12 @@ class Chef
         :boolean => true,
         :default => false
 
-
+      option :zone,
+        # no short switch because -z is --local-mode
+        :long => "--zone ZONE",
+        :description => "Brightbox zone; default is gb1-a. Can also be gb1-b",
+        :default => 'gb1-a',
+        :proc => Proc.new { |z| Chef::Config[:zone] = z }
 
       def tcp_test_ssh(hostname)
         tcp_socket = TCPSocket.new(hostname, 22)
@@ -143,6 +148,7 @@ class Chef
         server = connection.servers.create(
           :name => config[:server_name],
           :image_id => Chef::Config[:knife][:image],
+          :zone_id => zone_id,
           :flavor_id => Chef::Config[:knife][:flavor] || config[:flavor]
         )
         puts " done \n"
@@ -151,6 +157,7 @@ class Chef
         puts "#{ui.color("Name", :cyan)}: #{server.name}"
         puts "#{ui.color("Flavor", :cyan)}: #{server.flavor_id}"
         puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
+        puts "#{ui.color("Zone", :cyan)}: #{server.zone['handle']}"
 
         print "\n#{ui.color("Waiting server", :magenta)}"
 
@@ -209,6 +216,34 @@ class Chef
         bootstrap
       end
 
+      private
+
+      # Get zone identifiers from Brightbox's API (example: `zon-ca1g2`) and
+      # their handle (example: `gb1-a`). They are not necessarily the same
+      # on every user account.
+      def zones
+        connection.zones.inject({}) do |memo, z|
+          memo[z.handle] = z.id
+
+          memo
+        end
+      end
+
+      def zone_id
+        zone_handle = Chef::Config[:knife][:zone] || config[:zone]
+
+        begin
+          zones.fetch(zone_handle)
+        rescue KeyError
+          ui.error <<-EOF
+This is not a valid zone: #{zone_handle}
+
+Valid zones: #{zones.keys.join(', ')}
+          EOF
+
+          exit 1
+        end
+      end
     end
   end
 end
