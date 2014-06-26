@@ -110,6 +110,13 @@ class Chef
         :description => "The ssh username; default is 'root'",
         :default => "root"
 
+      option :first_boot_attributes,
+        :short => "-j JSON_ATTRIBS",
+        :long => "--json-attributes",
+        :description => "A JSON string to be added to the first run of chef-client",
+        :proc => lambda { |o| JSON.parse(o) },
+        :default => {}
+
       option :identity_file,
         :short => "-i IDENTITY_FILE",
         :long => "--identity-file IDENTITY_FILE",
@@ -223,6 +230,7 @@ class Chef
         bootstrap.config[:use_sudo] = true unless config[:ssh_user] == 'root'
         bootstrap.config[:template_file] = locate_config_value(:template_file)
         bootstrap.config[:environment] = config[:environment]
+        bootstrap.config[:first_boot_attributes] = config[:first_boot_attributes]
         bootstrap.config[:no_host_key_verify] = config[:no_host_key_verify]
         bootstrap
       end
