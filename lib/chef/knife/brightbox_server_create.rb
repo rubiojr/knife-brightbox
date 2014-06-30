@@ -180,7 +180,7 @@ class Chef
         print "\n#{ui.color("Waiting server", :magenta)}"
 
         # wait for it to be ready to do stuff
-        server.wait_for { print "."; connection.servers.get(server.id).ready? }
+        server.wait_for { print "."; service.servers.get(server.id).ready? }
 
         puts("\n")
 
@@ -189,7 +189,7 @@ class Chef
         cip = connection.cloud_ips.get ip['id']
         destination_id = server.interfaces.last['id']
         cip.map destination_id
-        server.wait_for { print "."; connection.cloud_ips.get(ip['id']).mapped? }
+        server.wait_for { print "."; service.cloud_ips.get(ip['id']).mapped? }
         puts " done\n"
 
         server = connection.servers.get(server.id)
