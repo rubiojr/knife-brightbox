@@ -89,7 +89,7 @@ class Chef
 
             server.cloud_ips.each do |cid|
               cid = connection.cloud_ips.get(cid["id"])
-              print "#{ui.color("WARNING: ", :yellow)} Deleted cloud ip (#{cid.id})"
+              print "#{ui.color("WARNING:", :yellow)} Deleted cloud ip (#{cid.id})"
               print(".") until wait_for_release { cid.destroy; puts("done!") }
             end
           else
