@@ -1,3 +1,8 @@
+# 0.6.1
+
+* Fix fog deprecation warning by using service not connection
+* Remove dangling whitespace in delete server output
+
 # 0.6.0
 
 * Add support for passing JSON attributes to booting servers
