@@ -164,7 +164,7 @@ class Chef
 
         print "#{ui.color("Creating server... ", :magenta)}"
         server = connection.servers.create(
-          :name => config[:server_name],
+          :name => config[:server_name] || config[:chef_node_name],
           :image_id => Chef::Config[:knife][:image],
           :zone_id => zone_id,
           :flavor_id => Chef::Config[:knife][:flavor] || config[:flavor]
@@ -223,7 +223,7 @@ class Chef
         bootstrap.config[:run_list] = config[:run_list]
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
         bootstrap.config[:identity_file] = config[:identity_file]
-        bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.id
+        bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.name || server.id
         bootstrap.config[:bootstrap_version] = locate_config_value(:bootstrap_version)
         bootstrap.config[:distro] = locate_config_value(:distro)
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
