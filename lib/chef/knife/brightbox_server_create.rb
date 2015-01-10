@@ -157,7 +157,7 @@ class Chef
       def run
         $stdout.sync = true
 
-        unless Chef::Config[:knife][:image]
+        unless config[:image]
           ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
           exit 1
         end
@@ -165,9 +165,9 @@ class Chef
         print "#{ui.color("Creating server... ", :magenta)}"
         server = connection.servers.create(
           :name => config[:server_name] || config[:chef_node_name],
-          :image_id => Chef::Config[:knife][:image],
+          :image_id => config[:image],
           :zone_id => zone_id,
-          :flavor_id => Chef::Config[:knife][:flavor] || config[:flavor]
+          :flavor_id => config[:flavor]
         )
         puts " done \n"
 
@@ -249,7 +249,7 @@ class Chef
       end
 
       def zone_id
-        zone_handle = Chef::Config[:knife][:zone] || config[:zone]
+        zone_handle = config[:zone]
 
         begin
           zones.fetch(zone_handle)
