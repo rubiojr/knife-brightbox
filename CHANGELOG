@@ -1,3 +1,7 @@
+# 0.7.1
+
+* Allows overriding of attributes defined in `.chef/knife.rb` (@gregkare)
+
 # 0.7.0
 
 * If only one of '--server-name' or '-N' (chef node name) is given, use that
