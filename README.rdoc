@@ -68,6 +68,8 @@ Provisions a new server in the Brightbox Cloud and then perform a Chef bootstrap
 
 You can specify the Brightbox zone your new server will use using the `--zone` switch. By default it is `gb1-a`. It can also be `gb1-b` at the time of this writing. See `knife brightbox zone list` to request a current list from the API.
 
+You can specify the ssh port to connect to using the `--ssh-port` switch. By default it is `22`.
+
 == knife brightbox server delete
 
 Deletes an existing server in the currently configured Brightbox Cloud account by the server/instance id. You can find the instance id by entering 'knife brightbox server list'. You can specify the `--purge` flag to delete the associated node and client objects from the Chef server along with the cloup ip.
