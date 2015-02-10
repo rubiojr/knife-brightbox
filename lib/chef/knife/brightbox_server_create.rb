@@ -110,6 +110,13 @@ class Chef
         :description => "The ssh username; default is 'root'",
         :default => "root"
 
+      option :ssh_port,
+        :short => "-p PORT",
+        :long => "--ssh-port PORT",
+        :description => "The ssh port",
+        :default => 22,
+        :proc => Proc.new { |key| Chef::Config[:knife][:ssh_port] = key.to_i }
+
       option :first_boot_attributes,
         :short => "-j JSON_ATTRIBS",
         :long => "--json-attributes",
@@ -136,7 +143,7 @@ class Chef
         :proc => Proc.new { |z| Chef::Config[:zone] = z }
 
       def tcp_test_ssh(hostname)
-        tcp_socket = TCPSocket.new(hostname, 22)
+        tcp_socket = TCPSocket.new(hostname, config[:ssh_port])
         readable = IO.select([tcp_socket], nil, nil, 5)
         if readable
           Chef::Log.debug("sshd accepting connections on #{hostname}, banner is #{tcp_socket.gets}")
@@ -222,6 +229,7 @@ class Chef
         bootstrap.name_args = [server.cloud_ips.first['public_ip']]
         bootstrap.config[:run_list] = config[:run_list]
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
+        bootstrap.config[:ssh_port] = config[:ssh_port]
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.name || server.id
         bootstrap.config[:bootstrap_version] = locate_config_value(:bootstrap_version)
