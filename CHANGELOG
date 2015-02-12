@@ -1,3 +1,7 @@
+# 0.8.0
+
+* Allow configuring of SSH port when creating new server
+
 # 0.7.1
 
 * Allows overriding of attributes defined in `.chef/knife.rb` (@gregkare)
