@@ -29,7 +29,7 @@ class Chef
         includer.class_eval do
 
           deps do
-            require 'fog'
+            require 'fog/brightbox'
             require 'net/ssh/multi'
             require 'readline'
             require 'chef/json_compat'
