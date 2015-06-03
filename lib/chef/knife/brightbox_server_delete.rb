@@ -71,8 +71,8 @@ class Chef
           end
           msg("Instance ID", server.id.to_s)
           msg("Name", server.name)
-          msg("Flavor", server.flavor.name)
-          msg("Image", server.image.name)
+          msg("Flavor", server.flavor.name) if server.flavor
+          msg("Image", server.image.name) if server.image
           msg("Public IP Address", server.public_ip_address)
 
           puts "\n"
