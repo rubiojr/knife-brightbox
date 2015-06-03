@@ -1,3 +1,8 @@
+# 0.9.0
+
+* Guard against calling `#name` on `nil` resources when deleting
+* Use `fog-brightbox` rather than `fog`
+
 # 0.8.0
 
 * Allow configuring of SSH port when creating new server
