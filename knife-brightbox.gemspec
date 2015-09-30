@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
   s.authors     = ["Sergio Rubio"]
   s.email       = ["rubiojr@frameos.org","rubiojr@frameos.org"]
-  s.homepage = "http://wiki.opscode.com/display/chef"
+  s.homepage = "https://github.com/rubiojr/knife-brightbox"
   s.summary = "Brightbox Support for Chef's Knife Command"
   s.description = "Plugin to add support for Brightbox's Cloud service to Chef's Knife command"
   s.extra_rdoc_files = ["README.rdoc", "LICENSE" ]
